@@ -1,5 +1,5 @@
 ﻿;Author: Dylan Rosser 2018
-;Modified August 2020
+;Modified April 2021
 
 ; This is a script that will run or switch to certain applications. It will also launch common directories like the C drive.
 ;Add as many of these as you want to a .ahk file, and set that to be run at startup.
@@ -15,7 +15,7 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 #SingleInstance
 #WinActivateForce
 DetectHiddenWindows, on
-SetTitleMatchMode, 2 ;These two were added becuase I  was having trouble Winactivating google chrome. I hope they don't cause trouble elsewhere
+SetTitleMatchMode, 2 ;These two were added becuase I  was having trouble Winactivating google chrome.
 SetTitleMatchMode, Fast
 
 
@@ -47,6 +47,34 @@ return
 ;CTRL+Q = Quit the Active Application
 ^q::WinClose, A
 return
+;-----------------------------------------------------------------------------
+;Win+T Show Terminal
+#t::
+if WinExist("Windows PowerShell")
+    {
+        WinActivate
+        return
+    }
+else
+    ;{
+        Run, powershell -NoExit -Command "cd $Env:REPOS"
+        return
+    ;}
+;-----------------------------------------------------------------------------
+;Win+V Show VS Code
+#v::
+if WinExist("Visual Studio Code")
+    {
+        WinActivate
+        return
+    }
+else
+    {
+        Run, code
+        Sleep, 3000
+        WinClose, C:\WINDOWS\system32\cmd.exe
+        return
+    }
 ;-----------------------------------------------------------------------------
 ;Win+H = Run/Switch to SciTE Editor
 #h::
@@ -153,7 +181,7 @@ else
     }
     else
     {
-        Run "C:\Program Files\Mozilla Firefox\firefox.exe"
+        Run firefox
         Return
     }
 ;-----------------------------------------------------------------------------
